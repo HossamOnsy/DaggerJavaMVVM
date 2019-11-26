@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initiateViewModel() {
+        // this is how we initialize viewModel
         mainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
     }
 
@@ -72,9 +73,12 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "No data found!", Toast.LENGTH_SHORT).show();
             }
         });
+        // to show or hide progress bar
         mainActivityViewModel.progressBarVisibility.observe(this, progressBarVisibility -> {
             mainProgressBar.setVisibility(progressBarVisibility);
         });
+
+        // to show error if something occured
         mainActivityViewModel.errorOccured.observe(this, errorOccured -> {
             Toast.makeText(this, errorOccured, Toast.LENGTH_SHORT).show();
         });
