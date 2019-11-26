@@ -1,4 +1,4 @@
-package com.sam.daggerjavamvvm;
+package com.sam.daggerjavamvvm.ui;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,9 +8,10 @@ import android.widget.ImageView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.sam.daggerjavamvvm.R;
+import com.sam.daggerjavamvvm.models.CatModel;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class CatAdapter extends RecyclerView.Adapter<CatAdapter.ViewHolder> {
   public ArrayList<CatModel> data;

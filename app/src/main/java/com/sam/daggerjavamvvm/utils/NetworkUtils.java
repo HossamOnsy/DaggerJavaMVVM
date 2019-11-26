@@ -1,4 +1,6 @@
-package com.sam.daggerjavamvvm;
+package com.sam.daggerjavamvvm.utils;
+
+import com.sam.daggerjavamvvm.service.CatApi;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;

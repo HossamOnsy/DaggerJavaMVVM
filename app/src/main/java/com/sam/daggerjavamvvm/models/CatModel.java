@@ -1,4 +1,4 @@
-package com.sam.daggerjavamvvm;
+package com.sam.daggerjavamvvm.models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

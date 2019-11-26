@@ -1,7 +1,8 @@
-package com.sam.daggerjavamvvm;
+package com.sam.daggerjavamvvm.service;
+
+import com.sam.daggerjavamvvm.models.CatModel;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
