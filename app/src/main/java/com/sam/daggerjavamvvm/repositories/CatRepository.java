@@ -7,9 +7,12 @@ import java.util.ArrayList;
 
 import io.reactivex.Observable;
 
+import static com.sam.daggerjavamvvm.utils.NetworkUtils.createWebService;
+
 public class CatRepository {
 
-    CatApi catApi ;
+    private CatApi catApi  = createWebService();
+
 
     public Observable<ArrayList<CatModel>> getCats(int limit)  {
 
@@ -17,7 +20,4 @@ public class CatRepository {
     }
 
 
-    public CatRepository(CatApi catApi) {
-        this.catApi = catApi;
-    }
 }

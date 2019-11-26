@@ -5,7 +5,8 @@ import android.view.View;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.sam.daggerjavamvvm.service.CatApi;
+import com.sam.daggerjavamvvm.di.usecases.LoadCatsUseCase;
+import com.sam.daggerjavamvvm.models.Response;
 import com.sam.daggerjavamvvm.repositories.CatRepository;
 import com.sam.daggerjavamvvm.models.CatModel;
 
@@ -16,31 +17,38 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-import static com.sam.daggerjavamvvm.utils.NetworkUtils.createWebService;
-
 public class MainActivityViewModel extends ViewModel {
 
     CatRepository catRepository ;
 
     Disposable compositeDisposable = new CompositeDisposable();
 
+    private final LoadCatsUseCase loadCatsUseCase;
+
+
     public MutableLiveData<ArrayList<CatModel>> catListMLD = new MutableLiveData<>() ;
     public MutableLiveData<Integer> progressBarVisibility = new MutableLiveData<>() ;
     public MutableLiveData<String> errorOccured = new MutableLiveData<>() ;
+    public MutableLiveData<Response> response = new MutableLiveData<>() ;
 
-    public MainActivityViewModel(CatRepository catRepository) {
-        this.catRepository = catRepository;
+
+    public MainActivityViewModel(LoadCatsUseCase loadCatsUseCase) {
+        this.loadCatsUseCase = loadCatsUseCase;
+
     }
 
 
     public void getCats (){
 
-        compositeDisposable = catRepository.getCats(3)
+        compositeDisposable = loadCatsUseCase.execute()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnComplete(this::doOnComplete)
-                .doOnSubscribe(this::startSubscribing)
-                .subscribe(this::doSomething, this::showError);
+                .doOnSubscribe(__ -> response.setValue(Response.loading()))
+                .subscribe(
+                        catModelArrayList -> response.setValue(Response.success(catModelArrayList)),
+                        throwable -> response.setValue(Response.error(throwable))
+                );
     }
 
     private void startSubscribing(Disposable disposable) {
